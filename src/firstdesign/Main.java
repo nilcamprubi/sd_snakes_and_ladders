@@ -1,14 +1,7 @@
 package firstdesign;
 
-
-/**
- * @uml.dependency   supplier="primerDisseny.Game"
- */
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		String[] playerNames = {"Maria", "Abel","Nuria","Joan"};
 		int numSquares = 12;

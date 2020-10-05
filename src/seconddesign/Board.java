@@ -2,15 +2,8 @@ package seconddesign;
 import java.util.ArrayList;
 
 public final class Board {
-
-	/**
-	 * @uml.property  name="squares"
-	 * @uml.associationEnd  multiplicity="(2 -1)" aggregation="shared" inverse="board:problemDomain.Square"
-	 */
 	private ArrayList<Square> squares = new ArrayList<Square>();
-
 	private static int MINNUMSQUARES = 10;
-
 
 	public Board(int numSquares, int[][] ladders, int[][] snakes) {
 		assert numSquares > MINNUMSQUARES : "There must be at least " + MINNUMSQUARES + " squares";

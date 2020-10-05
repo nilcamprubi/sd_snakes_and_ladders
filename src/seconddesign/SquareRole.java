@@ -4,11 +4,6 @@ import java.util.LinkedList;
 
 
 public abstract class SquareRole {
-
-	/**
-	 * @uml.property  name="square"
-	 * @uml.associationEnd  multiplicity="(1 1)" inverse="squareRole:problemDomain.Square"
-	 */
 	protected Square square = null;
 
 	public SquareRole(Square s) {
@@ -19,11 +14,9 @@ public abstract class SquareRole {
 	public boolean isOccupied() {
 		return square.getPlayer() != null;
 	}
-	
 	public boolean isFirstSquare() {
 		return false;
 	}
-
 	public boolean isLastSquare() {
 		return false;
 	}

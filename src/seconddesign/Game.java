@@ -4,18 +4,8 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public final class Game {
-
-	/**
-	 * @uml.property  name="players"
-	 * @uml.associationEnd  multiplicity="(0 -1)" ordering="true" aggregation="shared" inverse="game:problemDomain.Player"
-	 */
 	private LinkedList<Player> players = new LinkedList<Player>();
-	/**
-	 * @uml.property  name="board"
-	 * @uml.associationEnd  multiplicity="(1 1)" aggregation="shared" inverse="game:problemDomain.Board"
-	 */
 	private Board board = null;
-
 	private Player winner;
 	
 	public Game(String[] playerNames, int numSquares, 

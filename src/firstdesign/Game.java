@@ -3,28 +3,13 @@ package firstdesign;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- * @uml.dependency   supplier="primerDisseny.Die"
- */
-public class Game {
-	/**
-	 * @uml.property  name="players"
-	 * @uml.associationEnd  multiplicity="(1 -1)" aggregation="shared" inverse="game:primerDisseny.Player"
-	 */
-	private LinkedList<Player> players = new LinkedList<Player>();
 
-	/**
-	 * @uml.property  name="squares"
-	 * @uml.associationEnd  multiplicity="(1 -1)" aggregation="shared" inverse="game:primerDisseny.ISquare"
-	 */
+public class Game {
+	private LinkedList<Player> players = new LinkedList<Player>();
 	private ArrayList<ISquare> squares = new ArrayList<ISquare>();
-	
 	private Player winner;
 	
-	/**
-	 * @param args
-	 */
-	public Game(String[] playerNames, 
+	public Game(String[] playerNames,
 			int numSquares, int[][] ladders, int[][] snakes) {
 		createPlayers(playerNames);
 		createGame(numSquares, ladders, snakes);

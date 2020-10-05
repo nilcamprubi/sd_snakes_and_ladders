@@ -11,10 +11,6 @@ public class FirstSquare extends Square {
 		assert pos==1;
 	}
 
-	/**
-	 * @uml.property  name="players"
-	 * @uml.associationEnd  multiplicity="(0 -1)" inverse="firstSquare:primerDisseny.Player"
-	 */
 	private Collection<Player> players = new ArrayList<Player>();
 	
 	@Override

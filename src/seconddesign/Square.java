@@ -2,24 +2,9 @@ package seconddesign;
 
 public class Square {
 
-	/**
-	 * @uml.property  name="board"
-	 * @uml.associationEnd  multiplicity="(1 1)" inverse="squares:problemDomain.Board"
-	 */
 	private Board board = null;
-	/**
-	 * @uml.property  name="player"
-	 * @uml.associationEnd  inverse="square:problemDomain.Player"
-	 */
-	private Player player = null;	
-	/**
-	 * @uml.property  name="position"
-	 */
+	private Player player = null;
 	private int position;
-	/** 
-	 * @uml.property name="squareRole"
-	 * @uml.associationEnd multiplicity="(1 1)" inverse="square:problemDomain.SquareRole"
-	 */
 	private SquareRole squareRole = null;
 
 	public Square(int pos, Board b) {
@@ -31,11 +16,9 @@ public class Square {
 	public Player getPlayer() {
 		return player;
 	}
-
 	public void setPlayer(Player p) {
 		player = p;
 	}
-
 	public int getPosition() {
 		return position;
 	}
@@ -58,32 +41,24 @@ public class Square {
 	public boolean isLastSquare() {
 		return squareRole.isLastSquare();
 	}
-
 	public Square moveAndLand(int moves) {
 		return squareRole.moveAndLand(moves);
 	}
-
 	public Square landHereOrGoHome() {
 		return squareRole.landHereOrGoHome();
 	}
-
 	public void enter(Player p) {
 		squareRole.enter(p);
 	}
-
 	public void leave(Player p) {
 		squareRole.leave(p);
 	}
-
-
 	public Square findRelativeSquare(int shift) {
 		return board.findSquare(position + shift);
 	}
-	
 	public Square findFirstSquare() {
 		return board.firstSquare();
 	}
-	
 	public Square findLastSquare() {
 		return board.lastSquare();
 	}
