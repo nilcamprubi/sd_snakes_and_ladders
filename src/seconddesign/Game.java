@@ -1,5 +1,8 @@
 package seconddesign;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -7,7 +10,8 @@ public final class Game {
 	private LinkedList<Player> players = new LinkedList<Player>();
 	private Board board = null;
 	private Player winner;
-	
+	private Logger logger = LoggerFactory.getLogger("Game");
+
 	public Game(String[] playerNames, int numSquares, 
 			int[][] snakes, int[][] ladders) {
 
@@ -21,32 +25,44 @@ public final class Game {
 	
 	private void makePlayers(String[] playerNames) {
 		assert playerNames.length>0 : "There must be some player" ;
-		System.out.println("Players are : ");
+		logger.debug("Players are : ");
 		int i=1;
 		for (String str : playerNames) {
 			Player player = new Player(str);
 			players.add(player);
-			System.out.println(i + ". " + str);
+			logger.debug(i + ". " + str);
 			i++;
 		}
 	}
-	
+
 	public void play() {
+		play(Integer.MAX_VALUE);
+	}
+
+	public boolean play(int maxNumRounds) {
 		assert !players.isEmpty() : "No players to play";
 		assert board!=null : "No scoreboard to play";
 		
 		Die die = new Die();
 		startGame();
 
-		System.out.println("Initial state : \n" + this);
-		while (notOver()) {
+		logger.debug("Initial state : \n" + this);
+		logger.debug("Initial state : \n" + this);
+		int numRounds = 0;
+		while (notOver() && (numRounds < maxNumRounds)) {
 			int roll = die.roll();
-			System.out.println("Current player is " + currentPlayer() 
-					+ " and rolls " + roll);
+			logger.debug("Current player is " + currentPlayer() + " and rolls " + roll);
 			movePlayer(roll);
-			System.out.println("State : \n" + this);
+			logger.debug("State : \n" + this);
+			numRounds++;
 		}
-		System.out.println(winner + " has won.");
+		boolean finished = ! notOver();
+		if (finished) {
+			logger.debug(winner + " has won in " + numRounds + " rounds");
+		} else {
+			logger.debug("nobody has won after " + numRounds + " rounds");
+		}
+		return finished;
 	}
 	
 	private void startGame() {

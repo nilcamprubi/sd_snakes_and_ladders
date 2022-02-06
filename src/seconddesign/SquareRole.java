@@ -1,10 +1,14 @@
 package seconddesign;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.LinkedList;
 
 
 public abstract class SquareRole {
 	protected Square square = null;
+	private Logger logger = LoggerFactory.getLogger("SquareRole");
 
 	public SquareRole(Square s) {
 		assert s!=null : "Null square for square role";
@@ -25,12 +29,12 @@ public abstract class SquareRole {
 		int lastPosition = square.findLastSquare().getPosition();
 		int presentPosition = square.getPosition();
 		if (presentPosition+moves>lastPosition) {
-			System.out.println("Should go to " + (presentPosition+moves+1) 
-					+ " beyond last square " + (lastPosition+1) 
+			logger.debug("Should go to " + (presentPosition+moves+1)
+					+ " beyond last square " + (lastPosition+1)
 					+ " so don't move");
 			return square;
 		} else {
-			System.out.println("move from " + (square.getPosition()+1) + " to "
+			logger.debug("move from " + (square.getPosition()+1) + " to "
 					+ (square.findRelativeSquare(moves).getPosition()+1));
 			return square.findRelativeSquare(moves).landHereOrGoHome();
 		}
@@ -38,9 +42,9 @@ public abstract class SquareRole {
 
 	public Square landHereOrGoHome() {
 		if (square.isOccupied()) {
-			System.out.println("square " + (square.getPosition()+1) + " is occupied");
+			logger.debug("square " + (square.getPosition()+1) + " is occupied");
 		} else {
-			System.out.println("land at " + (square.getPosition()+1));
+			logger.debug("land at " + (square.getPosition()+1));
 		}
 		return square.isOccupied() ? square.findFirstSquare() : square;
 	}

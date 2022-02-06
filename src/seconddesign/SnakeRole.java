@@ -1,8 +1,12 @@
 package seconddesign;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class SnakeRole extends SquareRole {
 	private int transport;
-	
+	private Logger logger = LoggerFactory.getLogger("SnakeRole");
+
 	public SnakeRole(Square s, int t) {
 		super(s);
 		assert t<0 : "A snake shift must be negative" ;
@@ -11,7 +15,7 @@ public final class SnakeRole extends SquareRole {
 
 	@Override
 	public Square landHereOrGoHome() {
-		System.out.println("snake from " + (square.getPosition()+1) + " to "
+		logger.debug("snake from " + (square.getPosition()+1) + " to "
 				+ (destination().getPosition()+1));
 		return destination().landHereOrGoHome();
 	}

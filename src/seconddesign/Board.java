@@ -1,9 +1,13 @@
 package seconddesign;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 
 public final class Board {
 	private ArrayList<Square> squares = new ArrayList<Square>();
 	private static int MINNUMSQUARES = 10;
+	private Logger logger = LoggerFactory.getLogger("Board");
 
 	public Board(int numSquares, int[][] ladders, int[][] snakes) {
 		assert numSquares > MINNUMSQUARES : "There must be at least " + MINNUMSQUARES + " squares";
@@ -14,7 +18,7 @@ public final class Board {
 	}
 	
 	private void makeSquares(int numSquares) {
-		System.out.println("There are " + numSquares + " squares");
+		logger.debug("There are " + numSquares + " squares");
 		for (int position=0 ; position<numSquares ; position++) {
 			Square square = new Square(position, this);
 			squares.add(square);
@@ -54,8 +58,7 @@ public final class Board {
 			assert (toPosition > 0) && (toPosition<numberOfSquares()-1);
 			assert (fromPosition < numberOfSquares()-1) && (fromPosition>0);
 			
-			System.out.println("snake from " + (fromPosition+1) 
-					+ " to " + (toPosition+1));
+			logger.debug("snake from " + (fromPosition+1) + " to " + (toPosition+1));
 			
 			Square snakeSquare = squares.get(fromPosition);
 			snakeSquare.setSquareRole(new SnakeRole(snakeSquare,transport));
@@ -74,8 +77,7 @@ public final class Board {
 			assert (toPosition < numberOfSquares()) && (toPosition > 0);
 			assert (fromPosition > 0) && (fromPosition < numberOfSquares());
 			
-			System.out.println("ladder from " + (fromPosition+1) 
-					+ " to " + (toPosition+1));
+			logger.debug("ladder from " + (fromPosition+1) + " to " + (toPosition+1));
 			
 			Square ladderSquare = squares.get(fromPosition);
 			ladderSquare.setSquareRole(new LadderRole(ladderSquare,transport));
