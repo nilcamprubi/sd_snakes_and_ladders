@@ -15,7 +15,7 @@ public final class Main {
 		int[][] snakesFromTo = { {11,5} };
 		int[][] laddersFromTo = { {2,6} , {7,9} };
 
-		boolean do_simulation = true;
+		boolean do_simulation = false;
 
 		if (do_simulation) {
 			// Simulation to compute probability of some player to finish the game before a
