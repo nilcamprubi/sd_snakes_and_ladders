@@ -1,6 +1,3 @@
-/**
- * 
- */
 package seconddesign;
 
 public final class LastSquareRole extends SquareRole {

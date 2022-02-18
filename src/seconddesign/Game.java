@@ -1,16 +1,11 @@
 package seconddesign;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.LinkedList;
-import java.util.Random;
 
 public final class Game {
 	private LinkedList<Player> players = new LinkedList<Player>();
 	private Board board = null;
 	private Player winner;
-	private Logger logger = LoggerFactory.getLogger("Game");
 
 	public Game(String[] playerNames, int numSquares, 
 			int[][] snakes, int[][] ladders) {
@@ -25,12 +20,12 @@ public final class Game {
 	
 	private void makePlayers(String[] playerNames) {
 		assert playerNames.length>0 : "There must be some player" ;
-		logger.debug("Players are : ");
+		System.out.println("Players are : ");
 		int i=1;
 		for (String str : playerNames) {
 			Player player = new Player(str);
 			players.add(player);
-			logger.debug(i + ". " + str);
+			System.out.println(i + ". " + str);
 			i++;
 		}
 	}
@@ -46,21 +41,21 @@ public final class Game {
 		Die die = new Die();
 		startGame();
 
-		logger.debug("Initial state : \n" + this);
-		logger.debug("Initial state : \n" + this);
+		System.out.println("Initial state : \n" + this);
+		System.out.println("Initial state : \n" + this);
 		int numRounds = 0;
 		while (notOver() && (numRounds < maxNumRounds)) {
 			int roll = die.roll();
-			logger.debug("Current player is " + currentPlayer() + " and rolls " + roll);
+			System.out.println("Current player is " + currentPlayer() + " and rolls " + roll);
 			movePlayer(roll);
-			logger.debug("State : \n" + this);
+			System.out.println("State : \n" + this);
 			numRounds++;
 		}
 		boolean finished = ! notOver();
 		if (finished) {
-			logger.debug(winner + " has won in " + numRounds + " rounds");
+			System.out.println(winner + " has won in " + numRounds + " rounds");
 		} else {
-			logger.debug("nobody has won after " + numRounds + " rounds");
+			System.out.println("nobody has won after " + numRounds + " rounds");
 		}
 		return finished;
 	}
@@ -96,9 +91,9 @@ public final class Game {
 	}
 	
 	private void movePlayer(int roll) {
-		Player currentPlayer = players.remove();
+		Player currentPlayer = players.remove(); // the first element of the list
 		currentPlayer.moveForward(roll);
-		players.add(currentPlayer);
+		players.add(currentPlayer); // to the end of list, we're using the linked list as a queue
 		if (currentPlayer.wins()) {
 			winner = currentPlayer;
 		}

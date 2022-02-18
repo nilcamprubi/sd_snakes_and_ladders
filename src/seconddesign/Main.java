@@ -1,59 +1,22 @@
 package seconddesign;
 
-import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public final class Main {
+	private static final String[] playerNames = {"Ana", "Blanca", "Carles", "Didac"};
+	// For the user first square is at position 1 but internally is at 0. When defining
+	// ladders and snakes from-to squares, we use users positions, 1...numSquares, and
+	// when making them we subtract 1 to the position.
+	// This is the board of figure 1(a) in the document "example"
+	//private static final int numSquares = 36;
+	//private static final int[][] snakesFromTo = { {12,2}, {14,11}, {35,22}, {31,19}, {17,4} };
+	//private static final int[][] laddersFromTo = { {3,16} , {5,7}, {15,25}, {21,32}, {18,20} };
+	// This is a smaller board
+	private static final int numSquares = 12;
+	private static final int[][] snakesFromTo = { {11,5} };
+	private static final int[][] laddersFromTo = { {2,6} , {7,9} };
 
 	public static void main(String[] args) {
-		// TODO these parameters have to be read and checked for
-		// validity from the console, that is, the command line.
-		String[] playerNames = {"Mireia", "Genis", "Martina", "Miquel"};
-		int numSquares = 12;
-		// for the user first square is at position 1 but internally is at 0
-		int[][] snakesFromTo = { {11,5} };
-		int[][] laddersFromTo = { {2,6} , {7,9} };
-
-		boolean do_simulation = false;
-
-		if (do_simulation) {
-			// Simulation to compute probability of some player to finish the game before a
-			// maximum number of rounds.
-			// IMPORTANT: for each value of maximum number of rounds, we play this mumber of games.
-			// For 15000 games per value of max rounds, the curve is quite smooth but you need to
-			// comment out all prints, otherwise it takes a lot of time. So we have replaced
-			// all System.out.println statements by a logger, the configuration file is in
-			// folder lib/. Change root level="debug" to root level="info" before running the
-			// simulation
-
-			final int MaxMaxRounds = 200;
-			// compute probability to finish for a maximum number of rounds from 1 to this number
-			final int NumGames = 15000;
-			// per each value of max rounds tried
-			double[] probabilityToFinish = new double[MaxMaxRounds];
-			Logger logger = LoggerFactory.getLogger("Main");
-			System.out.println(". = " + NumGames + " games");
-			for (int maxRounds = 1; maxRounds < MaxMaxRounds; maxRounds++) {
-				int numFinishedGames = 0;
-				for (int i = 0; i < NumGames; i++) {
-					Game game = new Game(playerNames, numSquares, snakesFromTo, laddersFromTo);
-					if (game.play(maxRounds)) {
-						numFinishedGames++;
-					}
-					probabilityToFinish[maxRounds] = numFinishedGames / (double) NumGames;
-				}
-				logger.debug("for " + maxRounds + " max number of rounds, "
-								+ numFinishedGames + " finished games");
-				System.out.print("."); // kind of progress bar
-			}
-			System.out.println();
-			System.out.println("After " + MaxMaxRounds*NumGames + " games, the probabilities are:");
-			System.out.println(Arrays.toString(probabilityToFinish));
-		} else {
-			// play one game, no limit of rounds
-			Game game = new Game(playerNames, numSquares, snakesFromTo, laddersFromTo);
-			game.play();
-		}
+		// check <root level="debug"> in lib/logback.xml
+		Game game = new Game(playerNames, numSquares, snakesFromTo, laddersFromTo);
+		game.play();
 	}
 }
