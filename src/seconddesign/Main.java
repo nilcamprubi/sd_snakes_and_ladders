@@ -15,7 +15,6 @@ public final class Main {
 	private static final int[][] laddersFromTo = { {2,6} , {7,9} };
 
 	public static void main(String[] args) {
-		// check <root level="debug"> in lib/logback.xml
 		Game game = new Game(playerNames, numSquares, snakesFromTo, laddersFromTo);
 		game.play();
 	}
