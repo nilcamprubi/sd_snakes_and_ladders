@@ -1,0 +1,78 @@
+@startuml 
+skinparam classAttributeIconSize 0
+' this is to use the standard notation for public, protected, private
+'skinparam linetype polyline
+' this draws composition and association lines as straight segments, not curves
+
+class Square {
+    # position : int
+    + Square(pos : int, game : Game)
+    + isLastSquare() : boolean
+    + enter(p : Player)
+    + leave(p : Player)
+    + isOccupied() : boolean
+    + getPosition() : int
+    + moveAndLand(moves : int)
+    # landHereOrGoHome() : Square
+    # findRelativeSquare(shift : int) : Square
+    # findFirstSquare() : Square
+}
+
+class Player {
+- name : String
++ moveForward(moves : int)
++ getPosition() : int
++ wins() : boolean
+}
+
+class Game {
+    + Game(playerNames: String[], numSquares : int, \n\t    snakes : int[][], ladders : int[][])
+    + play()
+    - makeBoard(numSquares : int, \n\t\t  snakes : int[][], ladders : int[][])
+    - makePlayers(names : String[])
+    - initializeGame()
+    - placePlayersAtFirstSquare()
+    - notOver() : boolean
+    - movePlayer(roll : int)
+    - currentPlayer() : Player
+}
+
+class Board {
+    + Board(numSquares : int, snakes : int[][], ladders : int[][])
+    + firstSquare() : Square
+    + lastSquare() : Square
+    + findSquare() : Square
+    + numberOfSquares() : int
+    - makeSnakes(snakes : int[][])
+    - makeLadders(ladders : int[][])
+}
+
+class Die {
+    - {static} MIN_VALUE : int = 1
+    - {static} MAX_VALUE : int = 6
+    + roll() : int
+}
+
+class Snake extends Square {
+    - transport : int
+}
+
+class Ladder extends Square {
+    - transport : int
+}
+
+class FirstSquare extends Square {
+    + isOccupied() : boolean
+    + enter(p : Player)
+    + leave(p : Player)
+}
+
+'associations
+Game x--right--> "1" Board : board
+Board "1\nboard" *-down-> "10...*" Square : squares
+Game *-down-> "1..*" Player : players
+Game x-down-> "1" Player : winner
+Square -left-> "0,1" Player : player
+Player -right-> "1" Square : square
+FirstSquare -left-> "*" Player : players
+@enduml

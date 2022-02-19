@@ -1,6 +1,3 @@
-package firstdesign;
-
-
 public class Die {
 	private static final int MINVALUE = 1;
 	private static final int MAXVALUE = 6;
@@ -14,3 +11,5 @@ public class Die {
 		return (int) (min + Math.round((max-min) * Math.random()));
 	}
 }
+
+

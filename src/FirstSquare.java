@@ -1,18 +1,12 @@
-package firstdesign;
-
 import java.util.ArrayList;
-import java.util.Collection;
-
 
 public class FirstSquare extends Square {
+	private ArrayList<Player> players = new ArrayList<Player>();
 
-	public FirstSquare(int pos, Game g) {
-		super(pos, g);
-		assert pos==1;
+	public FirstSquare(Board b) {
+		super(0, b);
 	}
 
-	private Collection<Player> players = new ArrayList<Player>();
-	
 	@Override
 	public void enter(Player p) {
 		players.add(p);

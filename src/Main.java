@@ -1,6 +1,4 @@
-package seconddesign;
-
-public final class Main {
+public class Main {
 	private static final String[] playerNames = {"Ana", "Blanca", "Carles", "Didac"};
 	// For the user first square is at position 1 but internally is at 0. When defining
 	// ladders and snakes from-to squares, we use users positions, 1...numSquares, and
@@ -18,4 +16,5 @@ public final class Main {
 		Game game = new Game(playerNames, numSquares, snakesFromTo, laddersFromTo);
 		game.play();
 	}
+
 }
