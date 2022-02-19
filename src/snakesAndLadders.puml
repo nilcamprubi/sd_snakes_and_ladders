@@ -6,7 +6,7 @@ skinparam classAttributeIconSize 0
 
 class Square {
     # position : int
-    + Square(pos : int, game : Game)
+    + Square(pos : int, board : Board)
     + isLastSquare() : boolean
     + enter(p : Player)
     + leave(p : Player)
@@ -55,13 +55,18 @@ class Die {
 
 class Snake extends Square {
     - transport : int
+    # landHereOrGoHome() : Square
+    - destination() : Square
 }
 
 class Ladder extends Square {
     - transport : int
+    # landHereOrGoHome() : Square
+    - destination() : Square
 }
 
 class FirstSquare extends Square {
+    + FirstSquare(board : Board)
     + isOccupied() : boolean
     + enter(p : Player)
     + leave(p : Player)
