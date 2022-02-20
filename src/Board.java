@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public final class Board {
 	private ArrayList<Square> squares = new ArrayList<>();
-	private static final int MINNUMSQUARES = 10;
+	private static final int MIN_NUM_SQUARES = 10;
 
 	public Board(int numSquares, int[][] ladders, int[][] snakes) {
-		assert numSquares > MINNUMSQUARES : "There must be at least " + MINNUMSQUARES + " squares";
+		assert numSquares > MIN_NUM_SQUARES : "There must be at least " + MIN_NUM_SQUARES + " squares";
 		makeSquares(numSquares);
 		makeLadders(ladders);
 		makeSnakes(snakes);

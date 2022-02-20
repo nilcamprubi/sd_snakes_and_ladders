@@ -2,12 +2,8 @@ public class Player {
   private String name;
   private Square square = null;
 
-  public Player(String strname) {
-    name = strname;
-  }
-
-  public Square getSquare() {
-    return square;
+  public Player(String name) {
+    this.name = name;
   }
 
   public void setSquare(Square square) {
