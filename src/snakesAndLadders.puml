@@ -81,7 +81,7 @@ class FirstSquare extends Square {
 
 ' relative position of classes not related by association
 ' or composition with hidden arrows
-Main -[hidden]down-> Game
+Main -[hidden]right-> Game
 Game -[hidden]down-> Die
 
 'associations
