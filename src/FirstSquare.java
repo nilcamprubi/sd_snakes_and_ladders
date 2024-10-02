@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class FirstSquare extends Square {
 	private ArrayList<Player> players = new ArrayList<Player>();
-
 	public FirstSquare(Board b) {
 		super(0, b);
 	}

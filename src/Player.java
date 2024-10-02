@@ -1,6 +1,7 @@
 public class Player {
   private String name;
   private Square square = null;
+  private Boolean dead = false;
 
   public Player(String name) {
     this.name = name;
@@ -17,6 +18,10 @@ public class Player {
   public int getPosition() {
     return square.getPosition();
   }
+
+  public Boolean getDead() { return dead; }
+
+  public void setDead(Boolean dead) { this.dead = dead; }
 
   @Override
   public String toString() {

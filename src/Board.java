@@ -4,11 +4,28 @@ public final class Board {
 	private ArrayList<Square> squares = new ArrayList<>();
 	private static final int MIN_NUM_SQUARES = 10;
 
-	public Board(int numSquares, int[][] ladders, int[][] snakes) {
+	public Board(int numSquares, int[][] ladders, int[][] snakes, int[] death_squares) {
 		assert numSquares > MIN_NUM_SQUARES : "There must be at least " + MIN_NUM_SQUARES + " squares";
 		makeSquares(numSquares);
-		makeLadders(ladders);
-		makeSnakes(snakes);
+		makeDeaths(death_squares);
+
+		// Create a new array to hold both snakes and ladders
+		int[][] snakesOrLadders = new int[snakes.length + ladders.length][2];
+
+		// Copy the snakes array into snakesOrLadders
+		for (int i = 0; i < snakes.length; i++) {
+			snakesOrLadders[i][0] = snakes[i][0];
+			snakesOrLadders[i][1] = snakes[i][1];
+		}
+
+		// Copy the ladders array into snakesOrLadders after snakes
+		for (int i = 0; i < ladders.length; i++) {
+			snakesOrLadders[snakes.length + i][0] = ladders[i][0];
+			snakesOrLadders[snakes.length + i][1] = ladders[i][1];
+		}
+
+		// Pass the combined snakesOrLadders array to makeSnakesOrLadders
+		makeSnakesOrLadders(snakesOrLadders);
 	}
 
 	public Square firstSquare() {
@@ -39,37 +56,35 @@ public final class Board {
 		assert squares.get(numSquares-1).isLastSquare();
 	}
 
-    private void makeSnakes(int[][] snakes) {
-		for (int i=0; i<snakes.length ; i++) {
-			assert snakes[i].length == 2;
-			
-			int fromPosition = snakes[i][0]-1;
-			int toPosition = snakes[i][1]-1;
-			int transport = toPosition - fromPosition;
-			
-			assert transport<0 : "In snake, destination equal or after origin";
-			assert (toPosition > 0) && (toPosition<numberOfSquares()-1);
-			assert (fromPosition < numberOfSquares()-1) && (fromPosition>0);
+	private void makeSnakesOrLadders(int[][] toFrom) {
 
-			System.out.println("snake from " + (fromPosition+1) + " to " + (toPosition+1));
-			squares.set(fromPosition, new Snake(fromPosition,this, transport));
-		}
-    }
-	
-    private void makeLadders(int[][] ladders) {
-		for (int i=0; i<ladders.length; i++) {
-			assert ladders[i].length == 2;
-			
-			int fromPosition = ladders[i][0]-1;
-			int toPosition = ladders[i][1]-1;
-			int transport = toPosition - fromPosition;
-			
-			assert transport>0 : "In ladder, origin equal or after destination";
-			assert (toPosition < numberOfSquares()) && (toPosition > 0);
-			assert (fromPosition > 0) && (fromPosition < numberOfSquares());
+		for (int i=0; i < toFrom.length; i++) {
+			assert toFrom[i].length == 2;
 
-			System.out.println("ladder from " + (fromPosition+1) + " to " + (toPosition+1));
-			squares.set(fromPosition, new Ladder(fromPosition,this, transport));
+			int fromPosition = toFrom[i][0]-1;
+			int toPosition = toFrom[i][1]-1;
+
+			int transport = toPosition - fromPosition;
+
+			if (transport > 0){
+				assert (toPosition < numberOfSquares()) && (toPosition > 0);
+				assert (fromPosition > 0) && (fromPosition < numberOfSquares());
+
+				System.out.println("ladder from " + (fromPosition+1) + " to " + (toPosition+1));
+				squares.set(fromPosition, new SnakeOrLadder(fromPosition,this, transport));
+			} else if (transport < 0) {
+				assert (toPosition > 0) && (toPosition<numberOfSquares()-1);
+				assert (fromPosition < numberOfSquares()-1) && (fromPosition>0);
+
+				System.out.println("snake from " + (fromPosition+1) + " to " + (toPosition+1));
+				squares.set(fromPosition, new SnakeOrLadder(fromPosition,this, transport));
+			}
 		}
-    }    
+	}
+
+	private void makeDeaths(int[] death_squares) {
+ 		for (int i=0; i < death_squares.length; i++) {
+			squares.set(death_squares[i]-1, new Death(death_squares[i]-1,this));
+		}
+	}
 }

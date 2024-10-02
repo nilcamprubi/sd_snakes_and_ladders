@@ -6,9 +6,9 @@ public final class Game {
 	private Player winner;
 
 	public Game(String[] playerNames, int numSquares,
-				int[][] snakes, int[][] ladders) {
+				int[][] snakes, int[][] ladders, int[] death_squares) {
 
-		makeBoard(numSquares, ladders, snakes);
+		makeBoard(numSquares, ladders, snakes, death_squares);
 		makePlayers(playerNames);
 	}
 
@@ -28,11 +28,16 @@ public final class Game {
 			System.out.println("State : \n" + this);
 			numRounds++;
 		}
-		System.out.println(winner + " has won after " + numRounds + " rounds");
+		if (winner != null) {
+			System.out.println(winner + " has won after " + numRounds + " rounds");
+		}
+		else {
+			System.out.println("No winner after " + numRounds + " everyone died.");
+		}
 	}
 
-	private void makeBoard(int numSquares, int[][] ladders, int[][] snakes) {
-		board = new Board(numSquares,ladders,snakes);
+	private void makeBoard(int numSquares, int[][] ladders, int[][] snakes, int[] death_squares) {
+		board = new Board(numSquares,ladders,snakes, death_squares);
 	}
 
 	private void makePlayers(String[] playerNames) {
@@ -59,13 +64,17 @@ public final class Game {
 	}
 
 	private boolean notOver() {
-		return (winner == null);
+		return ((winner == null) && (playersLeft()));
 	}
+
+	private boolean playersLeft() { return !(players.isEmpty()); }
 
 	private void movePlayer(int roll) {
 		Player currentPlayer = players.remove(); // the first element of the list
 		currentPlayer.moveForward(roll);
-		players.add(currentPlayer); // to the end of list, we're using the linked list as a queue
+		if (!currentPlayer.getDead()) {
+			players.add(currentPlayer); // to the end of list, we're using the linked list as a queue
+		}
 		if (currentPlayer.wins()) {
 			winner = currentPlayer;
 		}
